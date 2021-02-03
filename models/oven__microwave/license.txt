@@ -1,0 +1,11 @@
+Model Information:
+* title:	Oven  Microwave
+* source:	https://sketchfab.com/3d-models/oven-microwave-4941b660a4ed4711b55fc4293abbeca0
+* author:	sameka (https://sketchfab.com/sameka)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Oven  Microwave" (https://sketchfab.com/3d-models/oven-microwave-4941b660a4ed4711b55fc4293abbeca0) by sameka (https://sketchfab.com/sameka) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
