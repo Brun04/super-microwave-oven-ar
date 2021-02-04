@@ -3,8 +3,8 @@ window.onload = init;
 const localModels  = 'models/';
 const loader = new THREE.GLTFLoader();
 const patterns = ['kanji', 'letterF', 'letterB', 'letterC'];
-let scene, plateau, dish, indoor, dishOnPlateau, models, markers;
-
+let scene, plateau, dish, indoor, dishOnPlateau, models;
+let markerArray = []; let dishes = [];
 
 class Model{
     constructor(metadata){
@@ -75,9 +75,6 @@ class Dish{
             toAdd.scale.y = models[idx].scale;
 			toAdd.scale.z = models[idx].scale;
 			if(markerRoot != null){
-				//toAdd.position.x = models[idx].markerPos[0];
-				//toAdd.position.y = models[idx].markerPos[1];
-				//toAdd.position.z = models[idx].markerPos[2];
 				this.mesh.add(toAdd);
 				markerRoot.add(this.mesh);
 			}else{
@@ -96,13 +93,9 @@ class Scene{
 		// Light
 		let ambientLight = new THREE.AmbientLight( 0xcccccc, 1.0 );
 		this.scene.add( ambientLight );	
-		// Camera and mover
+		// Camera
 		this.camera = new THREE.Camera();
-		//scene.add(camera);
-		this.mover = new THREE.Group();
-		this.mover.add( this.camera );
-		this.mover.position.set(0, 2, 4);
-		this.scene.add( this.mover );
+		this.scene.add(this.camera);
 
 		this.renderer = new THREE.WebGLRenderer({
 			antialias : true,
@@ -161,7 +154,7 @@ class Scene{
 	}
 	
 	setupMarkerRoots(){
-		for (let i = 0; i < Math.min(models.length, patterns.length); i++){
+		for (let i = 0; i < Math.min(models.length, patterns.length)+1; i++){
 			let markerRoot = new THREE.Group();
 			this.scene.add(markerRoot);
 			let markerControls = new THREEx.ArMarkerControls(this.arToolkitContext, markerRoot, {
@@ -170,15 +163,9 @@ class Scene{
 			if(i == 0){ // Bind the first marker (e.g. kanji) and the oven
 				let oven = new Oven(markerRoot);
 			}else{ // Bind the other markers (e.g. letters) and the dishes
-				let dish = new Dish(i-1, markerRoot);
+				let dishM = new Dish(i-1, markerRoot);
+				markerArray.push(markerRoot);
 			}
-			// Marker events
-			/*markerRoot.addEventListener('click', function(){
-				console.log(markerRoot);
-			});
-			markerRoot.addEventListener('markerFound', function(){
-				console.log('Found! '+markerRoot);
-			});*/
 		}
 	}
 
@@ -188,6 +175,14 @@ class Scene{
 			this.arToolkitContext.update( this.arToolkitSource.domElement );
 		if(indoor != undefined)
 			indoor.rotation.y += Math.PI/192;
+		
+		for (let i = 0; i < markerArray.length; i++){
+			if (! markerArray[i].visible ){
+				indoor.children.pop(1);
+				indoor.add(dishes[i].mesh);
+				break;
+			}
+		}
 	}
 	
 	render(){ this.renderer.render( this.scene, this.camera ); }
@@ -207,7 +202,6 @@ function init(){
 		r.models.forEach(metadata => { models.push(new Model(metadata)); })
 		// Initialize the Three.js and AR tools/objects
 		scene = new Scene();
-        
         createPlateau();
         animate();
     })
@@ -223,9 +217,13 @@ function createPlateau(){
 }
 
 function createDish(idx){
-	if(models.length > 0 && idx < models.length ){
-		dish = new Dish(idx);
-    	indoor.add(dish.mesh);
+	for(let i=0; i < models.length; i++ ){
+		dish = new Dish(i);
+		dishes.push(dish)
+		if(i == idx){
+			indoor.add(dish.mesh);
+		}
+		console.log(indoor);
 	}
 }
 
