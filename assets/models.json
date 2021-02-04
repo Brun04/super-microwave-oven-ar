@@ -1,0 +1,31 @@
+{
+    "models":[
+        {
+            "name": "ramen",
+            "subset": "Bowl_mega_grp",
+            "scale": 0.1,
+            "ovenPosition": [0.25, -0.55, 0.5],
+            "territory": "Japan",
+            "coordinates":[35.709026,139.731992],
+            "markerPosition": [0, 0, 0]
+        },
+        {
+            "name": "pizza",
+            "subset": "",
+            "scale": 0.035,
+            "ovenPosition": [0, -0.5, 0],
+            "territory": "Italy",
+            "coordinates":[41.902782,12.496366],
+            "markerPosition": [0, 0.6, -5]
+        },
+        {
+            "name": "paella",
+            "subset": "",
+            "scale": 10.0,
+            "ovenPosition": [0, -0.4, -0.8],
+            "territory": "Spain",
+            "coordinates":[40.416775,-3.703790],
+            "markerPosition": [0, 0, -4]
+        }
+    ]
+}
