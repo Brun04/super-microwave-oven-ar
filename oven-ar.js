@@ -223,7 +223,6 @@ function createDish(idx){
 		if(i == idx){
 			indoor.add(dish.mesh);
 		}
-		console.log(indoor);
 	}
 }
 
